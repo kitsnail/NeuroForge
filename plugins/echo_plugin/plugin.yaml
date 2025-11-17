@@ -1,0 +1,3 @@
+name: echo
+type: test
+entry: plugin.py:run
