@@ -1,0 +1,20 @@
+meta:
+  version: 1.3
+  project: "NeuroForge v1.3 Demo"
+  author: "wh"
+  bgm: "assets/bgm/soft_thinking.mp3"
+
+timeline:
+  mode: auto   # 支持 future: "manual" / "editor"
+
+scenes:
+  - id: 1
+    title: "Introduction"
+    narration: "Welcome to NeuroForge version 1.3. This demo shows an AI-driven video timeline system."
+    d2_text: "box: Hello from D2 Diagram"
+    pipeline: [canvas, d2, tts, mix, compose]
+
+  - id: 2
+    title: "AI Composed Story"
+    narration: "In the future, AI will not just generate content, but orchestrate the entire storytelling process."
+    pipeline: [canvas, tts, mix, compose]
