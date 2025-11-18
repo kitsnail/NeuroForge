@@ -1,0 +1,20 @@
+meta:
+  version: 1.4
+  project: "NeuroForge Minimal Core Test"
+  author: "wh"
+  bgm: "assets/bgm/soft_thinking.mp3"
+
+timeline:
+  mode: auto
+
+scenes:
+  - id: 1
+    title: "Introduction"
+    narration: "Welcome to the NeuroForge v1.4 minimal core test. This scene demonstrates clean orchestration and modular audio-video generation."
+    diagram: "box: AI Engine -> Output: Video"
+    pipeline: [canvas, d2, tts, mix, compose]
+
+  - id: 2
+    title: "AI Composed Story"
+    narration: "In this second scene, NeuroForge shows how AI can dynamically orchestrate multi-stage video composition."
+    pipeline: [canvas, tts, mix, compose]

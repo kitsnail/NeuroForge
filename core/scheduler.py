@@ -1,10 +1,4 @@
-# ===========================================================
-# NeuroForge v1.3 Core: Scheduler
-# -----------------------------------------------------------
-# 功能：
-#   项目的全局调度器，加载 Timeline 并执行全流程。
-# ===========================================================
-
+# core/scheduler.py (v1.4)
 from core.logger import log
 from core.timeline import Timeline
 
@@ -15,8 +9,7 @@ class Scheduler:
         self.output_dir = output_dir
 
     def run(self):
-        """执行完整时间线调度"""
-        log("🚀 NeuroForge v1.3 Scheduler Initialized")
+        log("🚀 NeuroForge v1.4 Scheduler Started (Minimal Core Mode)")
         timeline = Timeline(self.meta, self.scenes, self.output_dir)
-        timeline.execute()
+        timeline.run()
         log("✅ All scenes executed successfully.")

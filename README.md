@@ -1,306 +1,246 @@
-# 🎬 **NeuroForge · AI 视频结构化生产框架（MVP v1.0）**
-
-NeuroForge 是一个 **面向 AI 时代的视频生产框架**，
-采用 **插件化 + 声明式 Pipeline + 结构化 IO 隔离** 的方式，
-用最小的系统实现 **灵活、高扩展、可插拔的 AI 视频生成流程**。
-
-它不是一个“工具集合”，
-而是一个 **AI 驱动的视频编排引擎（Video Orchestrator）**。
+# 🧠 NeuroForge v1.3  
+> **AI 驱动的视频时间线编排引擎**  
+> —— 面向下一代智能视频创作架构
 
 ---
 
-# 🚀 Features（特性）
+## 🚀 项目概述
 
-### 🧱 1. 极简核心（Minimal Core）
+**NeuroForge** 是一个由 AI 驱动的视频编排与合成引擎。  
+它通过 **多插件流水线架构**，将文字叙述、语音合成、图像生成、音视频合成等 AI 模块整合为一个自动化视频生成系统。
 
-核心只负责四件事：
-
-* 插件加载（PluginLoader）
-* 顺序执行（Pipeline）
-* 调度控制（Scheduler）
-* 输入/输出管理（IOManager）
-
-没有复杂状态、没有共享副作用、没有过度设计。
-
----
-
-### 🔌 2. 完全插件化（Plugin as Unit）
-
-每个插件都是一个独立模块，可以随时：
-
-* 增加
-* 移除
-* 替换
-* 单独运行
-
-插件开发只需要实现一个函数：
-
-```python
-def run(context):
-    ...
-```
-
----
-
-### 🎛 3. 声明式视频编排（YAML Pipeline）
-
-通过 YAML 定义整个视频结构：
+v1.3 是首个实现 **统一规范化插件接口** 与 **自动时间线系统 (Auto-Timeline Engine)** 的版本。  
+该版本正式确立了 **NeuroForge Core Architecture**：
 
 ```yaml
-scenes:
-  - id: 1
-    pipeline:
-      - canvas
-      - d2
-      - tts
-      - mix
-      - compose
+Text Narration → TTS → Audio Mix → Visual Compose → Timeline Output
 ```
-
-未来可轻松扩展成 **DAG + 并行执行**。
 
 ---
 
-### 📁 4. 统一 IO 隔离
+## 🧩 核心特性
 
-核心自动为每个场景与插件生成目录结构：
-
-```
-output/
-  scene_1/
-    canvas/
-    d2/
-    tts/
-    mix/
-    compose/
-```
-
-避免插件互相污染，保持结果可追踪与可复现。
+| 模块 | 功能 | 状态 |
+|------|------|------|
+| 🧠 **AI Narration Engine** | 支持基于文本或AI生成剧本 | ✅ |
+| 🔊 **TTS Plugin** | 自动语音合成 + 字幕生成 | ✅ |
+| 🎧 **Audio Mix Plugin** | 背景音乐混合与时长对齐 | ✅ |
+| 🖼 **Canvas / D2 Plugins** | 自动生成视觉背景 / 结构图 | ✅ |
+| 🎬 **Compose Plugin** | 合成最终视频并嵌入字幕 | ✅ |
+| 🕰 **Auto Timeline Engine** | 动态计算场景时长，构建时间线 | ✅ |
+| 🧩 **Plugin System** | 模块化执行，可扩展新插件 | ✅ |
+| 📁 **IO Manager** | 统一输出路径与结构管理 | ✅ |
 
 ---
 
-### 🔮 5. 构建未来 AI 视频创作架构
+## 📁 项目结构
 
-基于第一性原理：视频 = 信息结构化表达
-NeuroForge 是一个：
+```sh
 
-* 结构驱动（Structure-First）
-* 插件可组合（Composable）
-* 模型可切换（Model-Agnostic）
-* 可扩展到 Agent / DAG / 并行
-
-的视频生成系统。
-
----
-
-# 📦 项目结构
-
-```
 NeuroForge/
-│
-├── neuroforge.py
-│
 ├── core/
-│   ├── loader.py
-│   ├── pipeline.py
-│   ├── scheduler.py
-│   ├── io.py
-│   └── logger.py
+│   ├── io.py              ← 输入/输出管理
+│   ├── loader.py          ← 插件加载器
+│   ├── logger.py          ← 统一日志系统
+│   ├── scene_runner.py    ← 单场景执行单元
+│   ├── timeline.py        ← 自动时间线系统
+│   └── scheduler.py       ← 全局调度器
 │
 ├── plugins/
-│   ├── canvas/
-│   │   └── plugin.py
-│   ├── d2/
-│   │   └── plugin.py
-│   ├── tts/
-│   │   └── plugin.py
-│   ├── mix/
-│   │   └── plugin.py
-│   └── compose/
-│       └── plugin.py
+│   ├── canvas/   ← 背景生成
+│   ├── d2/       ← 结构图生成
+│   ├── tts/      ← 文本语音合成
+│   ├── mix/      ← 音频混合
+│   ├── compose/  ← 视频合成
+│   └── ...       ← 自定义插件扩展点
 │
 ├── configs/
-│   └── demo.yaml
+│   ├── demo_v1_3.yaml     ← 示例配置文件
 │
-└── output/
-```
+├── assets/                ← 素材文件夹（如BGM）
+│
+├── output/                ← 输出结果（自动生成）
+│   ├── scene_1/
+│   ├── scene_2/
+│   └── ...
+│
+└── neuroforge.py          ← 主入口
+
+````
 
 ---
 
-# 🧠 核心组件介绍
+## ⚙️ 配置文件结构（YAML）
 
-## 🔹 PluginLoader
-
-自动扫描并加载 plugins/ 下的插件。
-
-## 🔹 Pipeline
-
-按 YAML 定义顺序执行插件
-（未来可扩展成 DAG）
-
-## 🔹 Scheduler
-
-调度整个项目生命周期：
-加载插件 → 执行 pipeline
-
-## 🔹 IOManager
-
-为每个插件生成标准输出目录，保证插件自治性。
-
-## 🔹 Logger
-
-统一日志输出。
-
----
-
-# 🔌 开发你的第一个插件
-
-在 `plugins/myplugin/plugin.py` 中编写：
-
-```python
-from core.io import IOManager
-from core.logger import log
-import os
-
-def run(ctx):
-    plugin_name = os.path.basename(os.path.dirname(__file__))
-    out_dir = IOManager.get_plugin_dir(ctx["scene_dir"], plugin_name)
-
-    log(f"[{plugin_name}] running...")
-
-    output_file = os.path.join(out_dir, "result.txt")
-    with open(output_file, "w") as f:
-        f.write("Hello from my plugin!")
-
-    return {
-        plugin_name: {
-            "output": output_file
-        }
-    }
-```
-
-插件无需注册，会自动被加载。
-
----
-
-# 📜 示例配置文件（configs/demo.yaml）
+示例：`configs/demo_v1_3.yaml`
 
 ```yaml
 meta:
-  title: Demo Project
+  version: 1.3
+  project: "NeuroForge Unified Standard"
+  author: "wh"
+  bgm: "assets/bgm/soft_thinking.mp3"
+
+timeline:
+  mode: auto  # 自动根据语音时长计算时间线
 
 scenes:
   - id: 1
-    title: Scene One
-    pipeline:
-      - canvas
-      - d2
-      - tts
-      - mix
-      - compose
-```
+    title: "Introduction"
+    narration: "Welcome to NeuroForge — an AI-driven video creation framework."
+    pipeline: [canvas, d2, tts, mix, compose]
+
+  - id: 2
+    title: "AI Composed Story"
+    narration: "In this scene, NeuroForge seamlessly connects AI narration with visuals and sound."
+    pipeline: [canvas, tts, mix, compose]
+````
 
 ---
 
-# ▶️ 运行项目
+## 🔄 执行示例
 
 ```bash
-python neuroforge.py
+python3 neuroforge.py configs/demo_v1_3.yaml
 ```
 
-NeuroForge 会基于 demo.yaml 执行整个视频生产流程。
+**执行输出示例：**
+
+```
+[NeuroForge] 🚀 NeuroForge v1.3 Scheduler Initialized
+🎞️ Executing Scene 1: Introduction
+...
+⏳ Scene 1 Duration: 7.10s
+🎞️ Executing Scene 2: AI Composed Story
+...
+⏳ Scene 2 Duration: 7.42s
+🧭 Auto-Timeline Summary:
+  • Scene 1: 0.00s → 7.10s
+  • Scene 2: 7.10s → 14.52s
+🎬 All scenes processed, auto timeline complete.
+✅ All scenes executed successfully.
+```
 
 ---
 
-# 🧩 插件生态（示例）
+## 🧱 插件开发规范（v1.3 标准）
 
-你可以将下面这些通用处理步骤实现为插件：
+每个插件必须：
 
-* AI 绘图（canvas）
-* 结构图生成（d2）
-* 文本转语音（tts）
-* 背景音乐混合（mix）
-* 视频合成（compose）
-* Manim 动画（manim）
-* AI 配音（voice）
-* 文字排版（layout）
-* 镜头切分（shot）
-* 角色生成（avatar）
-* RAG 信息生成（knowledge）
+* 位于 `plugins/<name>/plugin.py`
+* 定义主函数：`def run(ctx):`
+* 返回统一结构：
 
-所有插件均可互相组合。
+```python
+return {
+  "<plugin_name>": {
+    "<output_key>": "path/to/output.file",
+    "meta": { "duration": 7.1 }
+  }
+}
+```
 
----
+### 插件上下文 (ctx)
 
-# 🌱 开发路线（Roadmap）
-
-### ✅ v1.0 — MVP 版本（当前）
-
-* 最小核心
-* 顺序式 Pipeline
-* 插件可插拔
-* 统一 IO
-* 独立插件执行
+| 键名          | 类型       | 描述       |
+| ----------- | -------- | -------- |
+| `meta`      | dict     | 全局项目信息   |
+| `scene`     | dict     | 当前场景配置   |
+| `scene_id`  | int      | 场景编号     |
+| `scene_dir` | str      | 当前场景输出目录 |
+| `timeline`  | optional | 全局时间线数据  |
 
 ---
 
-### 🚧 v1.5 — 插件参数化
+## 🔊 插件示例：TTS
 
-* 每个插件可配置参数
-* 插件执行缓存
+```python
+return {
+  "tts": {
+    "audio_out": "output/scene_1/tts/tts.wav",
+    "subtitle_out": "output/scene_1/tts/subtitle.srt",
+    "meta": {"duration": 4.63}
+  }
+}
+```
 
----
+## 🎧 插件示例：Mix
 
-### 🚀 v2.0 — DAG 调度（突破）
+```python
+return {
+  "mix": {
+    "audio_out": "output/scene_1/mix/mixed_audio.wav",
+    "meta": {"duration": 4.63}
+  }
+}
+```
 
-* DAG Pipeline
-* 并行执行
-* 插件依赖系统
-* 自动重试
-* 中间结果复用
+## 🎬 插件示例：Compose
 
----
-
-### 🔮 v3.0 — AI 智能编排
-
-* 大模型自动规划 Pipeline
-* 智能镜头生成
-* 智能节奏控制
-* 多 Agent 协同
-
----
-
-### 🪐 v4.0 — 完整视频 AI 操作系统
-
-* 插件生态平台
-* 分布式执行（K8s 风格）
-* 高度自动化
-* 结构化视频标准
-
----
-
-# ❤️ 贡献
-
-欢迎提交 Issue / PR，一起把 NeuroForge 打造成
-**AI 视频时代最优雅、最模块化、最结构化的生成框架。**
+```python
+return {
+  "compose": {
+    "video_out": "output/scene_1/compose/final_with_sub.mp4",
+    "meta": {"duration": 7.10}
+  }
+}
+```
 
 ---
 
-# 📄 License
+## 🧭 输出结果结构
 
-MIT License
+```
+output/
+├── scene_1/
+│   ├── canvas/canvas.png
+│   ├── tts/tts.wav
+│   ├── tts/subtitle.srt
+│   ├── mix/mixed_audio.wav
+│   └── compose/final_with_sub.mp4
+│
+└── scene_2/
+    ├── ...
+```
 
 ---
 
-如果你需要，我可以继续提供：
+## 💡 设计哲学
 
-### ✔ 项目 Logo
+> **“AI 不是生成视频，而是编排叙事。”**
 
-### ✔ 项目架构图（D2）
+NeuroForge 的核心思想是：
 
-### ✔ 插件开发文档（Plugin Dev Guide）
+> 将 AI 从“生成单一媒体”提升到“组织多模态时间序列”的层面。
 
-### ✔ Pipeline 语法规范
+这意味着：
 
-### ✔ 项目网站 README（更商业版）
+* 文本、语音、图像、视频是“元素”；
+* 时间线是“骨架”；
+* NeuroForge 是“导演”。
 
+---
+
+## 🧭 未来规划（v1.4+）
+
+| 模块                     | 目标功能                                |
+| ---------------------- | ----------------------------------- |
+| 🎞️ `timeline.merge()` | 自动拼接所有场景视频为完整影片                     |
+| 🗣️ `ai.scriptgen`     | 自动剧本文案生成（LLM 接入）                    |
+| 🎨 `ai.visual`         | 自动生成背景画面（Stable Diffusion / DALL·E） |
+| 🧩 `plugin.registry`   | 在线插件注册与热加载                          |
+| 🧰 `editor.gui`        | 图形化编排编辑器                            |
+
+---
+
+## 🧑‍💻 作者与版权
+
+**Author:** wh
+**Project:** NeuroForge
+**Version:** 1.3 (Unified Plugin Standard + Auto Timeline Edition)
+**License:** MIT
+
+---
+
+> *“In the future, AI will not just create — it will compose time.”*
+> — **NeuroForge Philosophy**

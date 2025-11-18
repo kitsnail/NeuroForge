@@ -64,4 +64,4 @@
 ### 🧾 Meta
 - **Author:** wh  
 - **Project Start:** Nov 2025  
-- **Philosophy:** “丙火命·偏印格” — Creativity through structural precision
+- **Philosophy:**  Creativity through structural precision
