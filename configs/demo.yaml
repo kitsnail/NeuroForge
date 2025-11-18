@@ -1,0 +1,16 @@
+meta:
+  title: "Demo Video"
+
+scenes:
+  - id: 1
+    title: "Scene One"
+    d2_text: |
+      box: Hello NeuroForge!
+    tts: "Welcome to NeuroForge, an AI video generation framework."
+    bgm: "assets/bgm/default_bgm.mp3"
+    pipeline:
+      - canvas
+      - d2
+      - tts
+      - mix
+      - compose

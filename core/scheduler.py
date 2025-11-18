@@ -1,16 +1,16 @@
+# core/scheduler.py
+from core.loader import PluginLoader
+from core.pipeline import Pipeline
+
 class Scheduler:
-    def __init__(self, registry):
-        self.registry = registry
+    """极简调度器：加载插件 → 执行 Pipeline"""
 
-    def run_scene(self, scene):
-        print(f"[NeuroForge] Running scene: {scene.title}")
+    def __init__(self, meta, scenes, output_dir="output"):
+        self.meta = meta
+        self.scenes = scenes
+        self.output_dir = output_dir
 
-        # 目前 Demo：只调用 echo 插件
-        out = self.registry.run("echo", {
-            "title": scene.title,
-            "narration": scene.narration,
-            "visual": scene.visual,
-            "subtitle": scene.subtitle
-        })
-
-        return out
+    def run(self):
+        PluginLoader.load_plugins()
+        pipeline = Pipeline(self.meta, self.scenes, self.output_dir)
+        pipeline.run()
