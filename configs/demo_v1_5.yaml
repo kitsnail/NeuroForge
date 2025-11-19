@@ -1,0 +1,25 @@
+meta:
+  version: 1.5.1
+  project: "NeuroForge v1.5.1 Demo"
+  author: "wh"
+  bgm: "assets/bgm/soft_thinking.mp3"
+
+timeline:
+  mode: auto
+
+scenes:
+  - id: 1
+    title: "v1.5.1 — Introduction with Analyze"
+    narration: "Welcome to NeuroForge v1.5. This version introduces narrative analysis and smooth scene transitions."
+    diagram: "box: Analyze Plugin -> TTS -> Mix -> Compose"
+    pipeline: [canvas, d2, analyze, tts, mix, compose, transition]
+
+  - id: 2
+    title: "v1.5.1 — Transition Demonstration"
+    narration: "In this scene, we showcase the new transition plugin. It automatically generates a smooth visual link from the previous scene."
+    pipeline: [canvas, analyze, tts, mix, compose, transition]
+
+  - id: 3
+    title: "v1.5.1 — Emotion-sensitive Content"
+    narration: "This final scene demonstrates emotion detection. The narrative is joyful and exciting, expressing a truly uplifting feeling of progress!"
+    pipeline: [canvas, analyze, tts, mix, compose, transition]

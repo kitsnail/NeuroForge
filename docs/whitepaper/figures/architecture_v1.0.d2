@@ -1,0 +1,28 @@
+NeuroForge: {
+    Core: {
+        Scheduler: "启动调度器"
+        Timeline: "时间线控制"
+        SceneRunner: "执行场景流水线"
+        IOManager: "文件路径管理"
+        PluginLoader: "动态加载插件"
+        Logger: "统一日志系统"
+    }
+
+    Plugins: {
+        canvas: "生成画布"
+        d2: "结构图渲染"
+        tts: "语音生成"
+        mix: "音频混合"
+        compose: "视频合成"
+    }
+
+    Flow: {
+        Input: "YAML 项目定义"
+        ScenePipeline: "scene.pipeline 执行链"
+        Output: "final_video.mp4"
+    }
+
+    Core -> Plugins: "标准化上下文 ctx"
+    Plugins -> Flow: "文件输出结构"
+    Flow -> Output: "最终渲染结果"
+}
