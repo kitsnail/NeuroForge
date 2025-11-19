@@ -1,13 +1,17 @@
-# ===========================================================
-# NeuroForge v1.3 Entry Point
-# -----------------------------------------------------------
-# 加载配置 → 启动 Scheduler → 执行时间线。
-# ===========================================================
-
+# neuroforge.py (v1.5.1 CLI-fixed)
+import sys
 import yaml
 from core.scheduler import Scheduler
 
-def main(config_path="configs/demo_v1_3.yaml"):
+def main():
+    # 如果命令行给了参数，则使用该 YAML，否则使用默认 demo_v1_3.yaml
+    if len(sys.argv) > 1:
+        config_path = sys.argv[1]
+    else:
+        config_path = "configs/demo_v1_3.yaml"
+
+    print(f"Loading config: {config_path}")
+
     with open(config_path, "r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
